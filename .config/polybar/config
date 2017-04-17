@@ -18,10 +18,14 @@ primary = #39c6fe
 secondary = #e60053
 alert = #bf616a
 
-[bar/example]
-monitor = ${env:MONITOR:DP-4.8}
+;==============================
+;		BARS
+;==============================
+
+[bar/top]
+;monitor = ${env:MONITOR:DP-4.8}
 width = 100%
-height = 28
+height = 20
 ;offset-x = 1%
 ;offset-y = 1%
 ;radius = 6.0
@@ -43,19 +47,20 @@ module-margin-left = 1
 module-margin-right = 2
 
 ;font-0 = fixed:pixelsize=10;1
-font-0 = NotoSans-Regular:size=11;1
-font-1 = Siji:pixelsize=10;2
-font-2 = FontAwesome:size=10;2
+font-0 = roboto-condensed:size=8;1
+font-1 = freesans:size=8;1
+font-2 = "Wuncon Siji:pixelsize=8;1"
+font-3 = FontAwesome:size=8;1
 
 ; desktop PC modules
-modules-left = bspwm i3
-modules-center = mpris
-modules-right = volume xkeyboard memory cpu eth temperature date
+;modules-left = bspwm i3
+;modules-center = mpris
+;modules-right = volume xkeyboard memory cpu eth temperature date
 
 ; laptop modules
-;modules-left = bspwm i3
-;modules-center = 
-;modules-right = xbacklight volume memory cpu wlan eth battery temperature date powermenu
+modules-left = bspwm i3 temperature audiomenu
+modules-center = 
+modules-right = xbacklight volume memory cpu wlan eth battery date
 
 tray-position = right
 tray-padding = 2
@@ -72,6 +77,52 @@ tray-padding = 2
 
 ;scroll-up = i3wm-wsnext
 ;scroll-down = i3wm-wsprev
+
+[bar/bottom]
+
+;monitor = ${env:MONITOR:DP-4.8}
+bottom = true
+width = 100%
+height = 20
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #39c6fe
+
+border-top-size = 2
+border-color = #343d46
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+;font-0 = fixed:pixelsize=10;1
+font-0 = roboto-condensed:size=8;1
+font-1 = freesans:size=8;1
+font-2 = "Wuncon Siji:pixelsize=8;1"
+font-3 = FontAwesome:size=8;1
+
+; desktop PC modules
+;modules-left = bspwm i3
+;modules-center = mpris
+;modules-right = volume xkeyboard memory cpu eth temperature date
+
+; laptop modules
+modules-left = mpris
+modules-center = mpd
+modules-right = date
+
+
+;==============================
+;
+;		MODULES
+;
+;==============================
 
 [module/xwindow]
 type = internal/xwindow
@@ -109,18 +160,18 @@ type = internal/bspwm
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
-label-focused-padding = 5
+label-focused-padding = 4
 
 label-occupied = %index%
-label-occupied-padding = 5
+label-occupied-padding = 4
 
-label-urgent = %index%!
+label-urgent = > %index% <
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 5
+label-urgent-padding = 4
 
 label-empty = %index%
 label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 5
+label-empty-padding = 4
 
 [module/i3]
 type = internal/i3
@@ -159,6 +210,9 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 [module/mpd]
 type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+;format-offline = <label-offline>
+label-offline = mpd is offline
+label-offline-foreground = ${colors.foreground}
 
 icon-prev = 
 icon-stop = 
@@ -173,7 +227,8 @@ label-song-ellipsis = true
 type = internal/xbacklight
 
 format = <label> <bar>
-label = BL
+label = 
+label-foreground = ${colors.foreground-alt}
 
 bar-width = 10
 bar-indicator = |
@@ -181,10 +236,10 @@ bar-indicator-foreground = #ff
 bar-indicator-font = 2
 bar-fill = ─
 bar-fill-font = 2
-bar-fill-foreground = #9f78e1
+bar-fill-foreground = ${colors.foreground-alt}
 bar-empty = ─
 bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
+bar-empty-foreground = ${colors.foreground}
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -195,32 +250,25 @@ card = intel_backlight
 type = internal/cpu
 interval = 0.5
 format = <label> <ramp-coreload>
-label = CPU
+label = 
+label-foreground = ${colors.foreground-alt}
 
 ramp-coreload-0 = ▁
-ramp-coreload-0-font = 2
 ramp-coreload-0-foreground = #a3be8c
 ramp-coreload-1 = ▂
-ramp-coreload-1-font = 2
 ramp-coreload-1-foreground = #a3be8c
 ramp-coreload-2 = ▃
-ramp-coreload-2-font = 2
 ramp-coreload-2-foreground = #a3be8c
 ramp-coreload-3 = ▄
-ramp-coreload-3-font = 2
 ramp-coreload-3-foreground = #a3be8c
 ramp-coreload-4 = ▅
-ramp-coreload-4-font = 2
 ramp-coreload-4-foreground = #ebcb8b
 ramp-coreload-5 = ▆
-ramp-coreload-5-font = 2
 ramp-coreload-5-foreground = #ebcb8b
 ramp-coreload-6 = ▇
-ramp-coreload-6-font = 2
-ramp-coreload-6-foreground = #4f5b66
+ramp-coreload-6-foreground = #bf616a
 ramp-coreload-7 = █
-ramp-coreload-7-font = 2
-ramp-coreload-7-foreground = #4f5b66
+ramp-coreload-7-foreground = #bf616a
 
 [module/memory]
 type = internal/memory
@@ -232,18 +280,17 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = net1
+interface = wlp2s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 ;format-connected-underline = #9f78e1
 label-connected = %essid%
+label-disconnected = 
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
+format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected-foreground = #bf616a
 
 ramp-signal-0 = 
 ramp-signal-1 = 
@@ -254,7 +301,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = eno1
+interface = enp3s0f1
 interval = 3.0
 
 ;format-connected-underline = #55aa55
@@ -273,7 +320,7 @@ type = internal/date
 interval = 5
 
 date =
-date-alt = " %Y-%S-%d "
+date-alt = " %Y-%m-%d "
 
 time = %H:%M
 time-alt = %H:%M
@@ -287,12 +334,14 @@ label = %date% %time%
 [module/volume]
 type = internal/volume
 
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL: %percentage%%
+format-volume = <bar-volume> <label-volume>
+format-volume-prefix = 
+format-volume-prefix-foreground = ${colors.foreground-alt}
+label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
 format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
+format-muted-foreground = ${colors.alert}
 label-muted = sound muted
 
 bar-volume-width = 10
@@ -319,23 +368,39 @@ adapter = ADP1
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+;format-charging-underline = #ffb52a
 
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+;format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+;format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-8 = 
+ramp-capacity-9 = 
+
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-6 = 
+animation-charging-7 = 
+animation-charging-8 = 
+animation-charging-9 = 
+
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
 
@@ -344,7 +409,7 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <ramp> <label>
+format = 
 ;format-underline = #f50a4d
 format-warn = <ramp> <label-warn>
 format-warn-underline = #ffffff
@@ -385,12 +450,45 @@ menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
+[module/audiomenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.foreground-alt}
+label-close =  cancel
+label-close-foreground = #bf616a
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
 [module/mpris]
 type = custom/script
 interval = 2
 
 label = %output:0:45:...%
 exec = ~/.config/polybar/mpris.sh
+
+;==============================
+;
+;		OTHER
+;
+;==============================
 
 [settings]
 screenchange-reload = true

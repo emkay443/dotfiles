@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+barstatus=$(cat $HOME/.barstatus)
+
+killall -q polybar
+while pgrep -x polybar >/dev/null; do sleep 1; done
+
+if [[ $barstatus = "1" ]]; then
+	polybar bottom &
+fi
+
+polybar top &
